@@ -1,0 +1,61 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// Simulamos los datos que enviaba tu vista de Django
+const categories = [
+  { id: 1, name: "Residencial" },
+  { id: 2, name: "Comercial" }
+];
+
+const projects = [
+  { id: 1, title: "Residencial Los Olivos", image: "/core/img/project-1.jpg", category: "Residencial", published: "20 Mar" },
+  { id: 2, title: "Edificio Corporativo Delta", image: "/core/img/project-2.jpg", category: "Comercial", published: "15 Mar" }
+];
+---
+
+<Layout title="Proyectos">
+  <section class="intro-single" style="margin-top: -90px;">
+    </section>
+
+  <section class="property-grid grid">
+    <div class="container">
+      <div class="row">
+        {projects.map((project) => (
+          <div class="col-md-4">
+            <div class="card-box-a card-shadow">
+              <div class="img-box-a">
+                <img src={project.image} alt={project.title} class="img-a img-fluid">
+              </div>
+              <div class="card-overlay">
+                <div class="card-overlay-a-content">
+                  <div class="card-header-a">
+                    <h2 class="card-title-a">
+                      <a href={`/projects/${project.id}`}>{project.title}</a>
+                    </h2>
+                  </div>
+                  <div class="card-body-a">
+                    <a href={`/projects/${project.id}`} class="link-a">
+                      Ver detalle <span class="ion-ios-arrow-forward"></span>
+                    </a>
+                  </div>
+                  <div class="card-footer-a">
+                    <ul class="card-info d-flex justify-content-around">
+                      <li>
+                        <h4 class="card-info-title">Categoría</h4>
+                        <span>{project.category}</span>
+                      </li>
+                      <li>
+                        <h4 class="card-info-title">Publicado el</h4>
+                        <span>{project.published}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

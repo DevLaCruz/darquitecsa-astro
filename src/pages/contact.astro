@@ -1,0 +1,104 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contacto">
+  <section class="intro-single" style="margin-top: -90px; padding-bottom: 20px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-lg-8">
+          <div class="title-single-box">
+            <h1 class="title-single">Contactanos</h1>
+            <span class="color-text-a">Estamos aquí para ayudarte a construir el futuro.</span>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-4">
+          <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Contact</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" style="padding-top: 20px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-md-7">
+              
+              <form class="form-a contactForm" action="https://formsubmit.co/darquitecsa@gmail.com" method="POST" id="contact-form">
+                
+                <input type="hidden" name="_subject" value="¡Nuevo contacto desde la web de DARQUITECSA!">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+                
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                      <input type="text" name="name" id="name" class="form-control form-control-lg form-control-a" placeholder="Tu Nombre" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="form-group">
+                      <input type="tel" name="phone" id="phone" class="form-control form-control-lg form-control-a" placeholder="Tu Celular" required>
+                    </div>
+                  </div>
+                  <div class="col-md-12 mb-3">
+                    <div class="form-group">
+                      <input type="text" name="subject" id="subject" class="form-control form-control-lg form-control-a" placeholder="Asunto del Proyecto" required>
+                    </div>
+                  </div>
+                  <div class="col-md-12 mb-3">
+                    <div class="form-group">
+                      <textarea name="content" id="content" class="form-control" cols="45" rows="8" placeholder="Detalles de tu consulta..." required></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <button type="submit" class="btn btn-a">Enviar por WhatsApp y Correo</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Astro ejecuta los scripts del cliente aquí abajo
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+
+    if(form) {
+      form.addEventListener('submit', (e) => {
+        // Obtenemos los valores de los inputs
+        const name = (document.getElementById('name') as HTMLInputElement).value;
+        const phone = (document.getElementById('phone') as HTMLInputElement).value;
+        const subject = (document.getElementById('subject') as HTMLInputElement).value;
+        const content = (document.getElementById('content') as HTMLTextAreaElement).value;
+
+        // Armamos el mensaje para WhatsApp
+        // %0A es el código para un salto de línea en una URL
+        const text = `Hola DARQUITECSA, me contacto desde su página web:%0A%0A*Nombre:* ${name}%0A*Mi celular:* ${phone}%0A*Asunto:* ${subject}%0A*Mensaje:* ${content}`;
+        
+        // Asumiendo que el número es de Perú (+51). Si es de otro país, cambia el 51.
+        const waUrl = `https://wa.me/51975535023?text=${text}`;
+
+        // Abrimos WhatsApp en una nueva pestaña
+        window.open(waUrl, '_blank');
+
+        // NOTA: NO usamos e.preventDefault() aquí. 
+        // ¿Por qué? Porque queremos que DESPUÉS de abrir WhatsApp en otra pestaña, 
+        // el formulario continúe su curso normal y envíe los datos a FormSubmit 
+        // para que también te llegue el correo a darquitecsa@gmail.com.
+      });
+    }
+  });
+</script>

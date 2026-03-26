@@ -1,11 +1,203 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// --- MOCK DATA (Simulando lo que Django pasaba en el context) ---
+const services = [
+  { id: 1, title: "Diseño Arquitectónico" },
+  { id: 2, title: "Construcción BIM" },
+  { id: 3, title: "Gestión de Proyectos" }
+];
+
+const projects = [
+  {
+    id: 1,
+    title: "Residencial Los Olivos",
+    image: "/public/img/project-1.jpg",
+    category: "Inmobiliario",
+    published: "20 Mar"
+  },
+  {
+    id: 2,
+    title: "Edificio Corporativo Delta",
+    image: "/public/img/project-2.jpg",
+    category: "Comercial",
+    published: "15 Mar"
+  }
+];
+
+const recent_posts = [
+  {
+    id: 1,
+    title: "Tendencias de arquitectura 2026",
+    image: "/public/img/post-1.jpg",
+    categories: [{ id: 1, name: "Diseño" }, { id: 2, name: "Innovación" }],
+    published: "25 de Marzo, 2026"
+  }
+];
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Inicio">
+  
+  <div class="intro intro-carousel" style="z-index: -1;">
+    <div id="carousel" class="owl-carousel owl-theme">
+      <div class="carousel-item-a intro-item bg-image" style="background-image: url('/public/img/banner.jpeg')">
+        <div class="rectangle-1"></div>
+        <div class="rectangle-2"></div>
+        <div class="rectangle-transparent-1"></div>
+        <div class="rectangle-transparent-2"></div>
+        <div class="circle-1"></div>
+        <div class="circle-2"></div>
+        <div class="circle-3"></div>
+        <div class="triangle triangle-1">
+          <img src="/public//lib/" alt="Decoración" />
+        </div>
+        <div class="triangle triangle-2">
+          <img src="/public/img/obj_triangle.png" alt="Decoración" />
+        </div>
+        <div class="triangle triangle-3">
+          <img src="/public/img/obj_triangle.png" alt="Decoración" />
+        </div>
+        <div class="triangle triangle-4">
+          <img src="/public/img/obj_triangle.png" alt="Decoración" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section-services section-t8">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="title-wrap d-flex justify-content-between">
+            <div class="title-box">
+              <h2 class="title-a">Nuestros Servicios</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="property-carousel" class="owl-carousel owl-theme card-box-c foo">
+        {services.map((service) => (
+          <div class="carousel-item-b card-header-c d-flex" id={`service_${service.id}`}>
+            <div class="card-box-ico"></div>
+            <div class="card-title-c align-self-center" style="margin-left:-40px;">
+              <h2 class="title-c" style="margin-bottom: 10px;">{service.title}</h2>
+              <div class="title-link">
+                <a href={`/services#service_${service.id}`}>
+                  Leer más <span class="ion-ios-arrow-forward"></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-services section-t8">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="title-wrap d-flex justify-content-between">
+            <div class="title-box">
+              <h2 class="title-a">Nuestros últimos Proyectos</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="property-carousel2" class="owl-carousel owl-theme card-box-c foo">
+        {projects.map((project) => (
+          <div class="carousel-item-b card-header-c d-flex">
+            <div class="card-box-a card-shadow">
+              <div class="img-box-a">
+                <img src={project.image} alt={project.title} class="img-a img-fluid" />
+              </div>
+              <div class="card-overlay">
+                <div class="card-overlay-a-content">
+                  <div class="card-header-a">
+                    <h2 class="card-title-a">
+                      <a href={`/projects/${project.id}`}>{project.title}</a>
+                    </h2>
+                  </div>
+                  <div class="card-body-a">
+                    <a href={`/projects/${project.id}`} class="link-a">
+                      Click aquí para ver <span class="ion-ios-arrow-forward"></span>
+                    </a>
+                  </div>
+                  <div class="card-footer-a">
+                    <ul class="card-info d-flex justify-content-around">
+                      <li>
+                        <h4 class="card-info-title">Categoría</h4>
+                        <span>{project.category}</span>
+                      </li>
+                      <li>
+                        <h4 class="card-info-title">Publicado</h4>
+                        <span>{project.published}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- <section class="section-news section-t8">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="title-wrap d-flex justify-content-between">
+            <div class="title-box">
+              <h2 class="title-a">Nuestras últimas publicaciones</h2>
+            </div>
+            <div class="title-link">
+              <a href="/blog">Ir al Blog <span class="ion-ios-arrow-forward"></span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="new-carousel" class="owl-carousel owl-theme">
+        {recent_posts.map((post) => (
+          <div class="carousel-item-c">
+            <div class="card-box-b card-shadow news-box">
+              <div class="img-box-b">
+                {post.image ? (
+                  <img src={post.image} alt={post.title} class="img-b img-fluid" />
+                ) : (
+                  <p>No hay imagen disponible</p>
+                )}
+              </div>
+              <div class="card-overlay">
+                <div class="card-header-b">
+                  <div class="card-category-b">
+                    <em>
+                      {post.categories.map((cat, index) => (
+                        <>
+                          <a href={`/category/${cat.id}`} class="category-b">{cat.name}</a>
+                          {index < post.categories.length - 1 && ", "}
+                        </>
+                      ))}
+                    </em>
+                  </div>
+                  <div class="card-title-b">
+                    <h2 class="title-2">
+                      <a href={`/blog/${post.id}`}>{post.title}</a>
+                    </h2>
+                  </div>
+                  <div class="card-date">
+                    <span class="date-b">{post.published}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section> -->
 </Layout>

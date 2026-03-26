@@ -1,0 +1,77 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// 1. Astro necesita saber qué páginas construir. 
+// Aquí simulamos que obtenemos todos los IDs y sus datos.
+export async function getStaticPaths() {
+  const allProjects = [
+    { 
+      id: "1", 
+      title: "Residencial Los Olivos", 
+      description: "<strong>Proyecto premium</strong> con acabados de lujo.",
+      images: ["/public/img/project-1.jpg", "/public/img/project-1-b.jpg"]
+    },
+    { 
+      id: "2", 
+      title: "Edificio Corporativo Delta", 
+      description: "Edificio <em>eco-amigable</em> con certificación LEED.",
+      images: ["/public/img/project-2.jpg"]
+    }
+  ];
+
+  return allProjects.map((project) => ({
+    params: { id: project.id },
+    props: { project }, // Pasamos el proyecto completo como prop a la página
+  }));
+}
+
+// 2. Extraemos los datos del proyecto que pasamos en `props`
+const { project } = Astro.props;
+---
+
+<Layout title={project.title}>
+  <section class="intro-single" style="margin-top: -90px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-lg-8">
+          <div class="title-single-box">
+            <h1 class="title-single">{project.title}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="property-single nav-arrow-b">
+    <div class="container">
+      <div class="row">
+        <div id="property-single-carousel" class="owl-carousel owl-arrow gallery-property">
+          {project.images.map((image) => (
+            <div class="carousel-item-b">
+              <img src={image} alt={project.title}>
+            </div>
+          ))}
+        </div>
+
+        <div class="row section-md-t3" style="margin: 11px;">
+          <div class="col-md-6">
+            <div class="title-box-d">
+              <h3 class="title-d">Descripción</h3>
+            </div>
+            <div class="property-description">
+              <p class="description color-text-a" set:html={project.description}></p>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="title-box-d">
+              <h3 class="title-d">Contactar</h3>
+            </div>
+            <div class="property-contact">
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

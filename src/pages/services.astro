@@ -1,0 +1,67 @@
+---
+// astro_site/src/pages/services.astro
+import Layout from '../layouts/Layout.astro';
+
+// 1. SIMULACIÓN DE DATOS (Lo que antes hacía tu views.py)
+// Como Astro no lee la base de datos SQLite de Django por defecto, 
+// temporalmente definimos los datos aquí. Más adelante puedes 
+// traerlos con un fetch() desde una API de Django o un archivo JSON.
+const services = [
+  {
+    id: 1,
+    title: "Diseño Arquitectónico",
+    subtitle: "Innovación y Estética",
+    content: "Descripción detallada del primer servicio que ofrece DARQUITECSA...",
+    // OJO: Ajusta esta ruta a donde tengas tus imágenes de servicios
+    image: "/core/img/service-1.jpg" 
+  },
+  {
+    id: 2,
+    title: "Construcción BIM",
+    subtitle: "Tecnología y Precisión",
+    content: "Descripción detallada del segundo servicio...",
+    image: "/core/img/service-2.jpg"
+  }
+];
+---
+
+<Layout title="Servicios">
+  
+  {services.map((service) => (
+    <section id={`service_${service.id}`} class="page-section">
+      <div class="container foo">
+        <div class="product-item">
+          
+          <div class="product-item-title item-animation">
+            <div class="faded p-5 d-flex mr-auto rounded">
+              <h2 class="section-heading mb-0">
+                <span class="section-heading-upper">{service.subtitle}</span>
+                <span class="section-heading-lower">{service.title}</span>
+              </h2>
+            </div>
+          </div>
+          
+          <img 
+            class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0 item-animation" 
+            src={service.image} 
+            alt={`Imagen representativa de ${service.title}`} 
+          />
+          
+          <div class="product-item-description d-flex ml-auto item-animation">
+            <div class="faded p-5 rounded">
+              <p class="mb-0">{service.content}</p>
+              <div class="title-link">
+                <a href={`/contact?service_id=${service.id}&title=${encodeURIComponent(service.title)}`}>
+                  Contactar Servicio
+                  <span class="ion-ios-arrow-forward"></span>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+  ))}
+
+</Layout>
