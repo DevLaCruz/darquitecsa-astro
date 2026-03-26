@@ -1,0 +1,104 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const allPages = [
+    {
+      id: "1",
+      title: "Quienes Somos",
+      content: `
+        <p><strong>DARquitecsa</strong> ofrece al mercado servicios de ingeniería, construcción y servicios en general, especializados en diseño de interiores, exteriores y desarrollos inmobiliarios. Asimismo, brindamos servicios especializados en el modelado de proyectos de Infraestructura Civil bajo la aplicación de la metodología BIM.</p>
+        
+        <p>Con más de 10 años en el mercado, hemos completado de manera exitosa varios de los proyectos más importantes de la región norte del Perú y a nivel nacional, tanto en el sector privado como en el sector público. Todo ello ha sido posible gracias a nuestra sólida cultura empresarial, la cual considera a su gente como su principal activo organizacional.</p>
+        
+        <p>Poseemos un equipo altamente competente y especializado, conformado por arquitectos expertos en diseños públicos y privados, urbanismo y seguridad (INDECI); además contamos con ingenieros civiles, eléctricos, sanitarios, electromecánicos y electrónicos que comparten los valores corporativos de la empresa.</p>
+        
+        <p>En DARquitecsa nos preocupamos por todos nuestros grupos de interés, por ello manejamos una serie de compromisos enmarcados en nuestra Política de Responsabilidad Social, Seguridad y Salud, Medio Ambiente y Patrimonio Cultural.</p>
+      `
+    },
+    {
+      id: "2",
+      title: "Valores",
+      content: `
+        <p>En DARquitecsa tenemos la filosofía de pasar eficientemente de los objetivos y estrategias a las acciones concretas, que posibiliten alcanzar logros y resultados. Nuestra gestión se realiza dentro del marco de valores que sustentan el accionar de la empresa:</p>
+        <ul>
+          <li><strong>Integridad:</strong> Coherencia entre la palabra y la acción en un sentido de rectitud, probidad y respeto.</li>
+          <li><strong>Liderazgo:</strong> Capacidad de crear un clima que oriente el esfuerzo de los grupos humanos en una dirección deseada, promoviendo una visión compartida e inspirando valores de acción.</li>
+          <li><strong>Espíritu de equipo:</strong> Colaborar, cooperar y conjugar esfuerzos a fin de alcanzar objetivos comunes, produciendo un resultado mayor que la suma de los esfuerzos individuales.</li>
+          <li><strong>Innovación:</strong> Disposición de modificar las formas existentes de hacer las cosas buscando optimizar la eficiencia de los procesos y la eficacia de los resultados.</li>
+        </ul>
+      `
+    },
+    {
+      id: "3",
+      title: "Política de Privacidad",
+      content: `
+        <p>La presente Política de Privacidad establece los términos en que <strong>DARquitecsa</strong> usa y protege la información que es proporcionada por sus usuarios al momento de utilizar su sitio web. Estamos comprometidos con la seguridad de los datos de nuestros usuarios.</p>
+        
+        <h3>1. Información Recogida</h3>
+        <p>Nuestro sitio web podrá recoger información personal como: Nombre, información de contacto (número de teléfono/celular) y dirección de correo electrónico. Así mismo, cuando sea necesario, podrá ser requerida información específica para procesar alguna consulta sobre nuestros servicios de ingeniería o construcción.</p>
+        
+        <h3>2. Uso de la Información</h3>
+        <p>Nuestro sitio web emplea la información con el fin de proporcionar el mejor servicio posible, particularmente para mantener un registro de usuarios, de consultas y mejorar nuestros servicios. Es posible que sean enviados mensajes a través de WhatsApp o correos electrónicos para responder a sus solicitudes técnicas o comerciales.</p>
+        
+        <h3>3. Seguridad y Confidencialidad</h3>
+        <p>DARquitecsa está altamente comprometido para cumplir con el compromiso de mantener su información segura. Usamos los sistemas más avanzados y los actualizamos constantemente para asegurarnos de que no exista ningún acceso no autorizado.</p>
+        
+        <h3>4. Control de su Información Personal</h3>
+        <p>En cualquier momento usted puede restringir la recopilación o el uso de la información personal que es proporcionada a nuestro sitio web. No venderemos, cederemos ni distribuiremos la información personal que es recopilada sin su consentimiento, salvo que sea requerido por un juez con una orden judicial.</p>
+        
+        <p>Nos reservamos el derecho de cambiar los términos de la presente Política de Privacidad en cualquier momento para adaptarla a novedades legislativas en el marco de la Ley N° 29733 (Ley de Protección de Datos Personales en Perú).</p>
+      `
+    }
+  ];
+
+  return allPages.map((page) => ({
+    params: { id: page.id },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+---
+
+<Layout title={page.title}>
+  <!-- <section class="intro-single" style="margin-top: -90px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-lg-8">
+          <div class="title-single-box">
+            <h1 class="title-single">{page.title}</h1>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-4">
+          <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">{page.title}</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <section class="page-section" style="padding-top: 20px;">
+    <div class="container">
+      <div class="product-item">
+        <div class="product-item-title item-animation">
+          <div class="faded p-5 d-flex mr-auto rounded">
+            <h2 class="section-heading mb-0">
+              <span class="section-heading-lower">{page.title}</span>
+            </h2>
+          </div>
+        </div>
+
+        <div class="product-item-description d-flex item-animation" style="margin-left:7rem">
+          <div class="faded p-5 rounded">
+            <div class="mb-0 color-text-a" set:html={page.content}></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

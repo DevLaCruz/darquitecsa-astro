@@ -8,29 +8,28 @@ import Layout from '../layouts/Layout.astro';
       <div class="row">
         <div class="col-md-12 col-lg-8">
           <div class="title-single-box">
-            <h1 class="title-single">Contactanos</h1>
-            <span class="color-text-a">Estamos aquí para ayudarte a construir el futuro.</span>
+            <h1 class="title-single">Contáctanos</h1>
+            <span class="color-text-a">Estamos aquí para ayudarte a construir el futuro. Déjanos tu consulta y te responderemos a la brevedad.</span>
           </div>
         </div>
         <div class="col-md-12 col-lg-4">
           <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="/">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Contact</li>
+              <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Contacto</li>
             </ol>
           </nav>
         </div>
       </div>
     </div>
   </section>
-
   <section class="contact" style="padding-top: 20px;">
     <div class="container">
       <div class="row">
         <div class="col-sm-12">
           <div class="row">
+            
             <div class="col-md-7">
-              
               <form class="form-a contactForm" action="https://formsubmit.co/darquitecsa@gmail.com" method="POST" id="contact-form">
                 
                 <input type="hidden" name="_subject" value="¡Nuevo contacto desde la web de DARQUITECSA!">
@@ -50,7 +49,7 @@ import Layout from '../layouts/Layout.astro';
                   </div>
                   <div class="col-md-12 mb-3">
                     <div class="form-group">
-                      <input type="text" name="subject" id="subject" class="form-control form-control-lg form-control-a" placeholder="Asunto del Proyecto" required>
+                      <input type="text" name="subject" id="subject" class="form-control form-control-lg form-control-a" placeholder="Asunto" required>
                     </div>
                   </div>
                   <div class="col-md-12 mb-3">
@@ -64,40 +63,116 @@ import Layout from '../layouts/Layout.astro';
                 </div>
               </form>
             </div>
+
+            <div class="col-md-5 section-md-t3">
+              <div class="icon-box section-b2">
+                <div class="icon-box-icon">
+                  <span class="ion-ios-paper-plane"></span>
+                </div>
+                <div class="icon-box-content table-cell">
+                  <div class="icon-box-title">
+                    <h4 class="icon-title">Comunícate</h4>
+                  </div>
+                  <div class="icon-box-content">
+                    <p class="mb-1">Email.
+                      <span class="color-a">darquitecsa@gmail.com</span>
+                    </p>
+                    <p class="mb-1">Teléfono.
+                      <span class="color-a">+51 975 535 023</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="icon-box section-b2">
+                <div class="icon-box-icon">
+                  <span class="ion-ios-pin"></span>
+                </div>
+                <div class="icon-box-content table-cell">
+                  <div class="icon-box-title">
+                    <h4 class="icon-title">Encuéntranos en</h4>
+                  </div>
+                  <div class="icon-box-content">
+                    <p class="mb-1">
+                      Perú
+                      <br> (Atención a nivel nacional)
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="icon-box">
+                <div class="icon-box-icon">
+                  <span class="ion-ios-redo"></span>
+                </div>
+                <div class="icon-box-content table-cell">
+                  <div class="icon-box-title">
+                    <h4 class="icon-title">Redes Sociales</h4>
+                  </div>
+                  <div class="icon-box-content">
+                    <div class="socials-footer">
+                      <ul class="list-inline">
+                        <li class="list-inline-item">
+                          <a href="https://facebook.com" class="link-one" target="_blank">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                          </a>
+                        </li>
+                        <li class="list-inline-item">
+                          <a href="http://www.instagram.com" class="link-one" target="_blank">
+                            <i class="fa fa-instagram" aria-hidden="true"></i>
+                          </a>
+                        </li>
+                        <li class="list-inline-item">
+                          <a href="http://www.tiktok.com" class="link-one" target="_blank">
+                            <i class="fa fa-tiktok" aria-hidden="true"></i>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
     </div>
   </section>
-</Layout>
+  </Layout>
 
 <script>
-  // Astro ejecuta los scripts del cliente aquí abajo
   document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('contact-form') as HTMLFormElement;
+    
+    // 1. Lógica para autocompletar el Asunto si viene desde Servicios
+    const params = new URLSearchParams(window.location.search);
+    const serviceName = params.get('service');
+    const subjectInput = document.getElementById('subject') as HTMLInputElement;
+    const nameInput = document.getElementById('name') as HTMLInputElement;
 
+    if (serviceName && subjectInput) {
+      // Decodifica la URL y llena el campo
+      subjectInput.value = `Consulta sobre: ${decodeURIComponent(serviceName)}`;
+      // Pone el cursor en el campo de nombre automáticamente
+      if (nameInput) nameInput.focus();
+    }
+
+    // 2. Lógica para interceptar el envío, abrir WhatsApp y continuar a FormSubmit
+    const form = document.getElementById('contact-form') as HTMLFormElement;
     if(form) {
-      form.addEventListener('submit', (e) => {
-        // Obtenemos los valores de los inputs
+      form.addEventListener('submit', () => {
+        // Recopilamos los datos en el momento del envío
         const name = (document.getElementById('name') as HTMLInputElement).value;
         const phone = (document.getElementById('phone') as HTMLInputElement).value;
         const subject = (document.getElementById('subject') as HTMLInputElement).value;
         const content = (document.getElementById('content') as HTMLTextAreaElement).value;
 
-        // Armamos el mensaje para WhatsApp
-        // %0A es el código para un salto de línea en una URL
-        const text = `Hola DARQUITECSA, me contacto desde su página web:%0A%0A*Nombre:* ${name}%0A*Mi celular:* ${phone}%0A*Asunto:* ${subject}%0A*Mensaje:* ${content}`;
-        
-        // Asumiendo que el número es de Perú (+51). Si es de otro país, cambia el 51.
+        // Armamos el texto para WhatsApp (%0A es el salto de línea)
+        const text = `Hola DARQUITECSA, me contacto desde su página web:%0A%0A*Asunto:* ${subject}%0A*Nombre:* ${name}%0A*Celular:* ${phone}%0A*Mensaje:* ${content}`;
         const waUrl = `https://wa.me/51975535023?text=${text}`;
 
-        // Abrimos WhatsApp en una nueva pestaña
+        // Abre WhatsApp en una nueva pestaña
         window.open(waUrl, '_blank');
-
-        // NOTA: NO usamos e.preventDefault() aquí. 
-        // ¿Por qué? Porque queremos que DESPUÉS de abrir WhatsApp en otra pestaña, 
-        // el formulario continúe su curso normal y envíe los datos a FormSubmit 
-        // para que también te llegue el correo a darquitecsa@gmail.com.
+        
+        // No bloqueamos el evento por defecto para que el form proceda al action (FormSubmit)
       });
     }
   });
